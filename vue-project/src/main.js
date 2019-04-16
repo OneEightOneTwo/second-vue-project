@@ -1,21 +1,23 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
-import router from './router'
-// 新添
-import Vant from 'vant'
-import 'vant/lib/index.css'
-import './style/iconfont.css'
-import './style/bese.css'
-Vue.use(Vant)
+import App from './App.vue'
+// 引入路由对象
+import router from './router.js'
+// 引入状态管理对象
+import store from './store.js'
+
+// weui样式
+import 'weui'
+
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+// eslint
 new Vue({
-  // el: '#app',
+  el: "#app",
+  // 挂载路由实例
   router,
-  // components: { App },
-  // template: '<App/>'
-  render: h => h(App)
-}).$mount('#app')
+  // 配置状态管理
+  store,
+  // 渲染App组件
+  render: h => h(App),
+})
+// .$mount('#app')
