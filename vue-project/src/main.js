@@ -3,13 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+// 新添
+import Vant from 'vant'
+import 'vant/lib/index.css'
+import './style/iconfont.css'
+import './style/bese.css'
+Vue.use(Vant)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  // el: '#app',
   router,
-  components: { App },
-  template: '<App/>'
-})
+  // components: { App },
+  // template: '<App/>'
+  render: h => h(App)
+}).$mount('#app')
