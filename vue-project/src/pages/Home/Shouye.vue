@@ -1,16 +1,9 @@
 <template>
-  <div>
-    <Xheader :isShowBack="false" :isShowHam="false">首页</Xheader>
-  </div>
+  <div>这是首页</div>
 </template>
 
 <script>
-import Xheader from "../../components/Xheader.vue";
-export default {
-  components: {
-    Xheader
-  }
-};
+export default {};
 </script>
 
 <style>

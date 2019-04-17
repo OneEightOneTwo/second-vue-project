@@ -12,7 +12,7 @@ import Search from './pages/Search.vue'
 import Home from './pages/Home.vue'
 // 首页下的嵌套组件
 import Shouye from './pages/Home/Shouye.vue'
-import Discover from './pages/Home/Discover.vue'
+import Sort from './pages/Home/Sort.vue'
 import Shopcart from './pages/Home/Shopcart.vue'
 import Mine from './pages/Home/Mine.vue'
 
@@ -22,7 +22,7 @@ const routes = [
         path: '/home', component: Home, name: 'home',
         children: [
             { path: 'shouye', component: Shouye, name: 'shouye', },
-            { path: 'discover', component: Discover, name: 'discover', },
+            { path: 'sort', component: Sort, name: 'sort', },
             { path: 'shopcart', component: Shopcart, name: 'shopcart', },
             { path: 'mine', component: Mine, name: 'mine', }
         ]
