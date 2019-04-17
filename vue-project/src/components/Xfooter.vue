@@ -37,7 +37,7 @@ export default {
       tabbar: [
         // badge打数字
         { title: "首页", badge: 0, isBadge: false, name: "shouye" },
-        { title: "分类", badge: 0, isBadge: false, name: "discover" },
+        { title: "分类", badge: 0, isBadge: false, name: "sort" },
         // isBadge这是打红点
         { title: "购物车", badge: 0, isBadge: false, name: "shopcart" },
         { title: "我的", badge: 0, isBadge: true, name: "mine" }
