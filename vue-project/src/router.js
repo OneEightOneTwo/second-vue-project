@@ -5,6 +5,9 @@ Vue.use(VueRouter)
 
 // 详情页
 import Detail from './pages/Detail.vue'
+// 搜索页
+import Search from './pages/Search.vue'
+
 // 首页
 import Home from './pages/Home.vue'
 // 首页下的嵌套组件
@@ -12,10 +15,6 @@ import Shouye from './pages/Home/Shouye.vue'
 import Discover from './pages/Home/Discover.vue'
 import Shopcart from './pages/Home/Shopcart.vue'
 import Mine from './pages/Home/Mine.vue'
-
-
-// 搜索页
-import Search from './pages/Search.vue'
 
 // 定义路由
 const routes = [
