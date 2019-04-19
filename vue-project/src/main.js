@@ -7,6 +7,7 @@ import store from './store.js'
 
 // weui样式
 import 'weui'
+import 'swiper/dist/css/swiper.css';
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
