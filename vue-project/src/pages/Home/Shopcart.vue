@@ -17,16 +17,16 @@
         <!-- 全选 -->
         <el-checkbox class="car_content2_top" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">2小时达  <span class="baoyou">包邮</span></el-checkbox>
         <!-- 商品 li 渲染 -->
-        <el-checkbox-group class="goods_li" v-model="checkedCities" @change="handleCheckedCitiesChange">
+        <el-checkbox-group v-for="(item,idx) in goodList" :key="idx" class="goods_li" v-model="checkedCities" @change="handleCheckedCitiesChange">
           <!-- 单选 -->
-            <el-checkbox class="goods_btn" v-for="city in cities" :label="city" :key="city">{{tt}}</el-checkbox>
+            <el-checkbox class="goods_btn">{{tt}}</el-checkbox>
             <div class="goods_img">
-                <img src="../../assets/5.png" alt="">
+                <img :src="item.image" alt="">
             </div>
-            <span class="name" v-text="name">[4盒]椰子汁245ml</span>
+            <span class="name">{{item.name}}<span class="delete">删除</span></span>
             <div class="li_bottom">
                 <span class="danwei">￥</span>
-                <span class="newPrice" v-text="newPrice">3.9</span>
+                <span class="newPrice" v-text="item.lprice"></span>
                 <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字" size="small" id="jiajian"></el-input-number>
             </div> 
         </el-checkbox-group>
@@ -39,7 +39,7 @@
         <!-- 商品总价 -->
         <div id="total">
             <p id="right_1" class="right">
-                  ￥7.9
+                  ￥{{totalPrice}}
                 <span class="left">商品总价</span>
             </p>
             <p class="right">
@@ -51,7 +51,7 @@
                 <span class="left" style="color:black;">红包</span>
             </p>
             <p class="right">
-                  ￥7.9
+                  ￥{{totalPrice}}
                 <span class="left">商品实付</span>
             </p>
             <p class="right">
@@ -59,14 +59,14 @@
                 <span class="left">配送费</span>
             </p>
             <p id="right_last">
-               合计：<span>￥7.9</span>
+               合计：<span>￥{{totalPrice}}</span>
             </p>
         </div>
         <!-- 去结算 -->
         <div id="jiesuan">
           <el-checkbox class="all_check" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
           <div class="heji_baoyou">
-            <span class="heji">合计：<span class="price">￥7.9</span></span>
+            <span class="heji">合计：<span class="price">￥{{totalPrice}}</span></span>
             <p>包邮</p>
           </div>
           <div class="go_pay">去结算 </div>
@@ -128,22 +128,21 @@
 </template>
 <script>
 const cityOptions = ['上海'];
-import ElementUI from 'element-ui'
+import ElementUI from 'element-ui';
 export default {
   data() {
     return {
       name: '[4盒]椰子汁245ml',
       subtitle: '100%鲜榨，不用香精',
       newPrice: 3.9,
-      oldPrice: 12.9,
-      shopCardata:{
-          goodList:[]
-      },
+      oldPrice: 7.9,
+      totalPrice:100,
+      goodList:[],
       num: 1,
       checked: true,
       tt:'',
       serviceType:'2小时达',
-        //配送费,返回0就是包邮
+      //配送费,返回0就是包邮
       distributing:'',
       checkAll: false,
       checkedCities: '北京',
@@ -153,10 +152,15 @@ export default {
       address_to_search:true
     }
   },
-  // computed(data){
-  //    this.data.car_to_address
-  // },
+ 
   methods: {
+    getCar(){
+      this.$axios.get('http://106.15.176.14:3000/cart').then(res=>{
+        this.goodList = res.data;
+        console.log(res);
+        console.log(this.goodList);
+      });
+    },
     to_search(){
       this.$router.push({ path: '/xsmallsearch' })
     },
@@ -179,9 +183,19 @@ export default {
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length
     },
     handleChange(value) {
+        // e.totalPrice = value * e.newPrice;
+        // console.log('idx:'+idx);
         console.log(value);
+        // console.log(this.newPrice);
+        // console.log(this.totalPrice);
     }
-  }
+  },
+  computed: {
+    
+  },
+  created() {
+      this.getCar();
+    },
 }
 </script>
 <style scoped>
@@ -275,6 +289,15 @@ export default {
     text-align: left;
     margin-bottom:1.875rem; 
 }
+#car_content2 .goods_li .name .delete{
+    height: 1.25rem;
+    line-height: 1.25rem;
+    font-size: .75rem;
+    display: inline-block;
+    float:right;
+    color:red;
+    cursor: pointer;
+}
 #car_content2 .goods_li .li_bottom{
     width: 14.375rem;
     height: 1.375rem;
@@ -297,16 +320,16 @@ export default {
     float:left;
     color:red;
 }
-/* 推荐商品 */
+/* 加减按钮 */
 #jiajian{
-    width: 5.3125rem;
+    width: 6.25rem;
     height: 1.4375rem;
 }
-/* 加减按钮 */
 .el-input-number--small .el-input-number__decrease, .el-input-number--small .el-input-number__increase {
-    width: 1.375rem !important;
+    width: .07875rem !important;
     font-size: .8125rem;
 }
+/* 推荐商品 */
 #tuijian {
   /* width:100% ; */
   background-color:#f5f5f5;

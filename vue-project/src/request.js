@@ -7,7 +7,6 @@ Vue.prototype.$axios = axios
 
 export default {
     get(url, params) {
-        state.isToast += 1;
         return new Promise((resovle, reject) => {
             axios.get(url, {
                 params: {
@@ -15,7 +14,19 @@ export default {
                 }
             })
                 .then(function (response) {
-                    state.isToast -= 1;
+                    resovle(response);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+        })
+    },
+    post(url, params) {
+        return new Promise((resovle, reject) => {
+            axios.post(url, {
+                    ...params
+            })
+                .then(function (response) {
                     resovle(response);
                 })
                 .catch(function (error) {

@@ -369,7 +369,7 @@
                         </div>
                       </div>
 
-                      <div
+                      <div v-for="(item,idx) in arr1[0]" :key="item.uid"
                         class="product-list-item-wrap"
                         style="background-color: rgb(255, 255, 255);"
                       >
@@ -388,7 +388,7 @@
                                   <img src alt>
                                   <img
                                     @click="to_detail"
-                                    src="../../assets/xinren-jiangcong.jpg"
+                                    :src="item.image"
                                     width="200"
                                     class="vux-x-img b-loaded"
                                     id="vux-ximg-x1j7v"
@@ -398,8 +398,8 @@
                               <div class="item-detail">
                                 <div class="item-title">
                                   <div class="product-item-title">
-                                    <p class="sub-title">新人-葱姜蒜组合包</p>
-                                    <p class="mess-title">“用心”给你每一道菜加点料</p>
+                                    <p class="sub-title" v-text="item.name"></p>
+                                    <p class="mess-title" v-text="item.subtitle"></p>
                                   </div>
                                 </div>
                                 <div class="item-tag">
@@ -424,13 +424,13 @@
                                       >
                                         <span class="name"></span>
                                         <span class="sign">￥</span>
-                                        <span class="price">1.9</span>
+                                        <span class="price">1.90000000</span>
                                       </div>
                                     </div>
                                     <div class="down-price" style="color: rgb(255, 72, 145);">
                                       <!---->
                                       <span class="sign">￥</span>
-                                      <span class="price">0.01</span>
+                                      <span class="price" v-text="item.lotlprice"></span>
                                       <span class="name"></span>
                                       <!---->
                                       <span
@@ -438,7 +438,7 @@
                                         style="color: rgb(150, 150, 150); text-decoration: line-through;"
                                       >
                                         ￥
-                                        <span class="price has-line">1.9</span>
+                                        <span class="price has-line" v-text="item.lprice"></span>
                                       </span>
                                       <!---->
                                     </div>
@@ -461,96 +461,7 @@
                       </div>
                    
                    <!-- er -->
-                    <div
-                        class="product-list-item-wrap"
-                        style="background-color: rgb(255, 255, 255);"
-                      >
-                        <!---->
-                        <div style="padding: 0px 1%; width: 100%; box-sizing: border-box;">
-                          <section class="product-item-container">
-                            <div class="product-item">
-                              <div class="item-image">
-                                <div class="promotion">
-                                  <div class="product-item-promotion">
-                                    <!---->
-                                    <!---->
-                                  </div>
-                                </div>
-                                <div class="product-item-image">
-                                  <img src alt>
-                                  <img
-                                    @click="to_detail"
-                                    src="../../assets/xinren-jiangcong.jpg"
-                                    width="200"
-                                    class="vux-x-img b-loaded"
-                                    id="vux-ximg-x1j7v"
-                                  >
-                                </div>
-                              </div>
-                              <div class="item-detail">
-                                <div class="item-title">
-                                  <div class="product-item-title">
-                                    <p class="sub-title">新人-葱姜蒜组合包</p>
-                                    <p class="mess-title">“用心”给你每一道菜加点料</p>
-                                  </div>
-                                </div>
-                                <div class="item-tag">
-                                  <div class="product-item-tag">
-                                    <span>
-                                      <p
-                                        class="tag-text"
-                                        style="background-color: rgb(255, 255, 255); border-color: rgb(245, 159, 193); color: rgb(245, 159, 193);"
-                                      >
-                                        <!---->
-                                        <span class="product-item-tag-txt">新人专享</span>
-                                      </p>
-                                    </span>
-                                  </div>
-                                </div>
-                                <div class="item-price">
-                                  <div class="product-item-price">
-                                    <div class="up-price-height">
-                                      <div
-                                        class="up-price"
-                                        style="color: rgb(150, 150, 150); text-decoration: line-through; display: none;"
-                                      >
-                                        <span class="name"></span>
-                                        <span class="sign">￥</span>
-                                        <span class="price">1.9</span>
-                                      </div>
-                                    </div>
-                                    <div class="down-price" style="color: rgb(255, 72, 145);">
-                                      <!---->
-                                      <span class="sign">￥</span>
-                                      <span class="price">0.01</span>
-                                      <span class="name"></span>
-                                      <!---->
-                                      <span
-                                        class="has-line-through"
-                                        style="color: rgb(150, 150, 150); text-decoration: line-through;"
-                                      >
-                                        ￥
-                                        <span class="price has-line">1.9</span>
-                                      </span>
-                                      <!---->
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="item-cart">
-                                  <div class="product-item-cart">
-                                    <!---->
-                                    <div class="cart">
-                                      <img src="../../assets/cart.png" class="image">
-                                      <!---->
-                                    </div>
-                                  </div>
-                                </div>
-                                <!---->
-                              </div>
-                            </div>
-                          </section>
-                        </div>
-                      </div>
+                  
                    
                     </div>
                   </div>
@@ -566,17 +477,41 @@
 
 <script>
 import Swiper from "swiper";
+import request from "../../request.js";
+import Vue from 'vue';
 export default {
+  data(){
+    return {
+     arr1:[],
+    }
+  },
   methods: {
     to_detail(){
       this.$router.push({
         path:'/detail/:id'
       })
-    }
+    }  
   },
-
-
-};
+  created() {
+    let promise = request.post('http://106.15.176.14:3000/home/goods',null)
+    promise.then((result)=>{
+      // this.arr1 = result.data;
+      let a1=result.data;
+      if(a1){
+        Vue.set(this.arr1,0, result.data);
+        // console.log(this)
+      }
+      console.log(this.arr1)
+      // console.log(this.arr1)
+       //let goodsList =  this._data;
+      
+    });
+  },
+  mounted(){
+    
+  }
+  
+}
 </script>
 
 <style scope>
